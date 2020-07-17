@@ -77,14 +77,14 @@ class Snake:
         if len(self.body) > self.length:
             self.body.pop(0) 
 
-    def moveSnake(self, direction):
-        if direction == "RIGHT":
+    def moveSnake(self):
+        if self.direction == "RIGHT":
             self.head_x += MOVE_RATE
-        elif direction == "UP":
+        elif self.direction == "UP":
             self.head_y -= MOVE_RATE
-        elif direction == "DOWN":
+        elif self.direction == "DOWN":
             self.head_y += MOVE_RATE
-        elif direction == "LEFT":
+        elif self.direction == "LEFT":
             self.head_x -= MOVE_RATE    
 
         self.moveBody()
@@ -95,9 +95,11 @@ class Snake:
  
     def dispGameOver(self):
         text = font.render("GAME OVER !",True,WHITE)
-        screen.blit(text, [w/2-50, h/2])
+        screen.blit(text, [w/2-50, h/2-50])
+        text = font.render("SCORE : "+str(self.score),True,WHITE)
+        screen.blit(text, [w/2-40, h/2])
         text = font.render("HIT SPACEBAR TO RESTART",True,WHITE)
-        screen.blit(text, [w/2-100, h/2+25])
+        screen.blit(text, [w/2-100, h/2+50])
         pygame.display.flip()
 
 class Food:
@@ -105,12 +107,14 @@ class Food:
         self.x = random.randint(0, NO_OF_GRIDS)*GRIDSIZE
         self.y = random.randint(0, NO_OF_GRIDS)*GRIDSIZE
         self.colour = colour
+        
     def drawFood(self):
         pygame.draw.rect(screen, self.colour, [self.x, self.y, SIZE, SIZE])
-    def checkifyouatefood(self,snake,pts):
+
+    def checkifyouatefood(self,snake):
         if snake.head_x == self.x and snake.head_y == self.y:
             snake.growSnake()
-            snake.score += pts
+            snake.score += PTS
             self.x = random.randint(0, NO_OF_GRIDS)*GRIDSIZE
             self.y = random.randint(0, NO_OF_GRIDS)*GRIDSIZE
             eat_sound.play()
@@ -138,10 +142,9 @@ while not EXIT_GAME:
 
     screen.fill(BLACK)
     food.drawFood()
-    food.checkifyouatefood(snake,PTS)
-    snake.moveSnake(snake.direction)
+    food.checkifyouatefood(snake)
+    snake.moveSnake()
    
     fps_obj.tick(fps)
     if not snake.collided:
         pygame.display.flip()
-    
