@@ -13,6 +13,7 @@ w, h = pygame.display.get_surface().get_size()
 pygame.display.set_caption("SNAKE")
 fps_obj = pygame.time.Clock()
 fps = 12
+
 GRIDSIZE = 20
 NO_OF_GRIDS = (w-GRIDSIZE)/GRIDSIZE
 MOVE_RATE = 20
