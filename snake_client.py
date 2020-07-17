@@ -12,7 +12,8 @@ fps_obj = pygame.time.Clock()
 fps = 12
 
 address = ('127.0.0.1', 6000)
-conn = Client(address, authkey='secret password')
+# conn = Client(address, authkey='secret password')
+conn = Client(address)
 
 GRIDSIZE = 20
 NO_OF_GRIDS = (w-GRIDSIZE)/GRIDSIZE
@@ -37,7 +38,7 @@ def send_data(snake_head_x,snake_head_y,direction,length):
 class Player:
     def __init__(self,colour,name):
         self.snake = Snake(colour)
-        self.food = Food(colour)
+        self.food = Food(RED)
         self.name = name
         self.score = 0
         self.out_of_bound = True

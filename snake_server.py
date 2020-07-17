@@ -3,7 +3,9 @@ import pygame
 from multiprocessing.connection import Listener
 
 address = ('127.0.0.1', 6000)     # family is deduced to be 'AF_INET'
-listener = Listener(address, authkey='secret password')
+# listener = Listener(address, authkey='secret password')
+listener = Listener(address)
+
 conn = listener.accept()
 
 pygame.font.init()
@@ -36,7 +38,7 @@ def send_data(snake_head_x,snake_head_y,direction,length):
 class Player:
     def __init__(self,colour,name):
         self.snake = Snake(colour)
-        self.food = Food(colour)
+        self.food = Food(RED)
         self.name = name
         self.score = 0
         self.out_of_bound = False
